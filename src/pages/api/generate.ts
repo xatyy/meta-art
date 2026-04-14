@@ -13,6 +13,7 @@ const pinata = new PinataSDK({
 type Data = {
   success: boolean;
   metadataUri?: string;
+  imageUrl?: string;
   error?: string;
 };
 
@@ -40,7 +41,7 @@ export default async function handler(
       response_format: "b64_json",
     });
 
-    const b64Json = response.data[0].b64_json;
+    const b64Json = response.data?.[0]?.b64_json;
     if (!b64Json) {
       throw new Error("No image data returned from OpenAI");
     }
@@ -50,7 +51,7 @@ export default async function handler(
     const file = new File([buffer], "art.png", { type: "image/png" });
 
     // 3. Upload Image to Pinata IPFS
-    const uploadImageRes = await pinata.upload.file(file);
+    const uploadImageRes = await pinata.upload.public.file(file);
     const imageUri = `ipfs://${uploadImageRes.cid}`;
 
     // 4. Create Metadata JSON
@@ -61,10 +62,11 @@ export default async function handler(
     };
 
     // 5. Upload Metadata to Pinata IPFS
-    const uploadMetadataRes = await pinata.upload.json(metadata);
+    const uploadMetadataRes = await pinata.upload.public.json(metadata);
     const metadataUri = `ipfs://${uploadMetadataRes.cid}`;
 
-    return res.status(200).json({ success: true, metadataUri });
+    const imageUrl = `https://gateway.pinata.cloud/ipfs/${uploadImageRes.cid}`;
+    return res.status(200).json({ success: true, metadataUri, imageUrl });
   } catch (error: any) {
     console.error("Error generating or pinning NFT:", error);
     return res.status(500).json({ success: false, error: error.message || "Internal server error" });
