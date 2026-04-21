@@ -8,6 +8,12 @@ export default defineConfig({
     profiles: {
       default: {
         version: "0.8.28",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 1,
+          },
+        },
       },
       production: {
         version: "0.8.28",
@@ -31,6 +37,7 @@ export default defineConfig({
       url: process.env.POLYGON_AMOY_RPC ?? "",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       chainId: 80002,
+      gasPrice: 25000000000, // 25 gwei — network minimum
     },
   },
 });

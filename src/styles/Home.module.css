@@ -6,10 +6,10 @@
 
 .main {
   min-height: 100vh;
-  padding: 4rem 0;
+  padding: 4rem 1rem 6rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -198,6 +198,186 @@
   word-break: break-all;
   margin: 0;
   font-family: monospace;
+}
+
+.hashLink {
+  font-size: 0.8rem;
+  color: #0d76fc;
+  font-family: monospace;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.hashLink:hover {
+  text-decoration: underline;
+}
+
+/* ── Gallery ── */
+.draftsSection {
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 3rem;
+}
+
+.draftsHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.draftsTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #0d76fc, #7b2ff7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+.draftsCount {
+  font-size: 0.85rem;
+  color: #999;
+}
+
+.draftsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.draftCard {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e0e7ff;
+  box-shadow: 0 4px 16px rgba(13, 118, 252, 0.06);
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.draftCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(13, 118, 252, 0.12);
+}
+
+.draftImageWrapper {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #f0f4ff;
+}
+
+.draftImage {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  display: block;
+}
+
+.badgeDraft,
+.badgeMinted {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+}
+
+.badgeDraft {
+  background: rgba(13, 118, 252, 0.15);
+  color: #0d76fc;
+  border: 1px solid rgba(13, 118, 252, 0.25);
+}
+
+.badgeMinted {
+  background: rgba(27, 94, 32, 0.12);
+  color: #1b5e20;
+  border: 1px solid rgba(27, 94, 32, 0.2);
+}
+
+.draftInfo {
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.draftPrompt {
+  font-size: 0.85rem;
+  color: #444;
+  font-style: italic;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+}
+
+.draftFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.draftDate {
+  font-size: 0.75rem;
+  color: #aaa;
+}
+
+.draftActions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.mintDraftButton {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: none;
+  background: linear-gradient(90deg, #0d76fc, #7b2ff7);
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.mintDraftButton:hover {
+  opacity: 0.85;
+}
+
+.viewTxLink {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #0d76fc;
+  text-decoration: none;
+  padding: 4px 2px;
+}
+
+.viewTxLink:hover {
+  text-decoration: underline;
+}
+
+.deleteButton {
+  font-size: 1rem;
+  line-height: 1;
+  color: #ccc;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.deleteButton:hover {
+  color: #e53935;
+  background: #ffebee;
 }
 
 /* ── Error ── */
