@@ -25,7 +25,14 @@ const Home: NextPage = () => {
   const [generateError, setGenerateError] = useState('');
   const [currentDraftId, setCurrentDraftId] = useState<string | null>(null);
 
-  const { writeContract, data: hash, isPending: isMinting } = useWriteContract();
+  const {
+    writeContract,
+    data: hash,
+    isPending: isMinting,
+    error: mintError,
+    reset: resetMint,
+  } = useWriteContract();
+
   const { isLoading: isWaiting, isSuccess } = useWaitForTransactionReceipt({ hash });
 
   useEffect(() => {
@@ -37,6 +44,7 @@ const Home: NextPage = () => {
   const handleGenerate = async () => {
     if (!prompt) return;
     setIsGenerating(true);
+    setGenerateError('');
     try {
       const res = await fetch('/api/generate', {
         method: 'POST',
@@ -50,10 +58,10 @@ const Home: NextPage = () => {
         const id = addDraft(prompt, data.imageUrl, data.metadataUri);
         setCurrentDraftId(id);
       } else {
-        alert(data.error);
+        setGenerateError(data.error || 'Generation failed.');
       }
     } catch (e: any) {
-      alert("Error generating art: " + e.message);
+      setGenerateError('Error generating art: ' + e.message);
     } finally {
       setIsGenerating(false);
     }
@@ -61,6 +69,7 @@ const Home: NextPage = () => {
 
   const handleMint = () => {
     if (!address || !metadataUri) return;
+    resetMint();
     writeContract({
       address: CONTRACT_ADDRESS,
       abi: MetaArtABI,
@@ -99,13 +108,8 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <ConnectButton />
 
-        <h1 className={styles.title}>
-          Meta Art Gallery
-        </h1>
-
-        <p className={styles.description}>
-          Generate AI art and mint it directly to your wallet.
-        </p>
+        <h1 className={styles.title}>Meta Art Gallery</h1>
+        <p className={styles.description}>Generate AI art and mint it as an NFT to your wallet.</p>
 
         {isConnected ? (
           <>
@@ -276,7 +280,7 @@ const Home: NextPage = () => {
             )}
           </>
         ) : (
-          <p>Please connect your wallet to start generating.</p>
+          <p className={styles.connectPrompt}>Connect your wallet to start generating.</p>
         )}
       </main>
     </div>
