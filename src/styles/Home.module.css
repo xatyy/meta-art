@@ -380,6 +380,133 @@
   background: #ffebee;
 }
 
+/* ── Top bar ── */
+.topBar {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.navLink {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0d76fc;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 1.5px solid #d0d9ff;
+  border-radius: 10px;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.navLink:hover {
+  background: #f0f4ff;
+}
+
+/* ── Listed badge ── */
+.badgeListed {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+  background: rgba(123, 47, 247, 0.12);
+  color: #7b2ff7;
+  border: 1px solid rgba(123, 47, 247, 0.25);
+}
+
+/* ── List price input ── */
+.listInputRow {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.priceInput {
+  flex: 1;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.8rem;
+  border-radius: 7px;
+  border: 1.5px solid #d0d9ff;
+  outline: none;
+  min-width: 0;
+}
+
+.priceInput:focus {
+  border-color: #7b2ff7;
+}
+
+.confirmListButton {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: none;
+  background: linear-gradient(90deg, #0d76fc, #7b2ff7);
+  color: white;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+
+.confirmListButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ── List / Unlist buttons ── */
+.listButton {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1.5px solid #7b2ff7;
+  background: transparent;
+  color: #7b2ff7;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.listButton:hover:not(:disabled) {
+  background: #7b2ff7;
+  color: white;
+}
+
+.listButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.cancelListButton {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1.5px solid #e53935;
+  background: transparent;
+  color: #e53935;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.cancelListButton:hover:not(:disabled) {
+  background: #e53935;
+  color: white;
+}
+
+.cancelListButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 /* ── Error ── */
 .errorText {
   color: #b71c1c;
