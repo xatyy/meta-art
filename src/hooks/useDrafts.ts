@@ -6,8 +6,10 @@ export interface Draft {
   imageUrl: string;
   metadataUri: string;
   createdAt: number;
-  status: 'draft' | 'minted';
+  status: 'draft' | 'minted' | 'listed';
   txHash?: string;
+  tokenId?: number;
+  listingPrice?: string; // wei as string
 }
 
 const key = (address: string) => `meta-art-drafts-${address.toLowerCase()}`;
@@ -25,12 +27,6 @@ export function useDrafts(address?: string) {
     }
   }, [address]);
 
-  const persist = useCallback((next: Draft[]) => {
-    if (!address) return;
-    localStorage.setItem(key(address), JSON.stringify(next));
-    setDrafts(next);
-  }, [address]);
-
   const addDraft = useCallback((prompt: string, imageUrl: string, metadataUri: string): string => {
     const id = crypto.randomUUID();
     const draft: Draft = { id, prompt, imageUrl, metadataUri, createdAt: Date.now(), status: 'draft' };
@@ -42,9 +38,31 @@ export function useDrafts(address?: string) {
     return id;
   }, [address]);
 
-  const markMinted = useCallback((id: string, txHash: string) => {
+  const markMinted = useCallback((id: string, txHash: string, tokenId?: number) => {
     setDrafts(prev => {
-      const next = prev.map(d => d.id === id ? { ...d, status: 'minted' as const, txHash } : d);
+      const next = prev.map(d =>
+        d.id === id ? { ...d, status: 'minted' as const, txHash, tokenId } : d
+      );
+      if (address) localStorage.setItem(key(address), JSON.stringify(next));
+      return next;
+    });
+  }, [address]);
+
+  const markListed = useCallback((id: string, listingPrice: string) => {
+    setDrafts(prev => {
+      const next = prev.map(d =>
+        d.id === id ? { ...d, status: 'listed' as const, listingPrice } : d
+      );
+      if (address) localStorage.setItem(key(address), JSON.stringify(next));
+      return next;
+    });
+  }, [address]);
+
+  const markUnlisted = useCallback((id: string) => {
+    setDrafts(prev => {
+      const next = prev.map(d =>
+        d.id === id ? { ...d, status: 'minted' as const, listingPrice: undefined } : d
+      );
       if (address) localStorage.setItem(key(address), JSON.stringify(next));
       return next;
     });
@@ -58,5 +76,5 @@ export function useDrafts(address?: string) {
     });
   }, [address]);
 
-  return { drafts, addDraft, markMinted, deleteDraft };
+  return { drafts, addDraft, markMinted, markListed, markUnlisted, deleteDraft };
 }
